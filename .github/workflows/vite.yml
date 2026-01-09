@@ -1,0 +1,64 @@
+name: Vite app test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+  packages: read
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache Aspire deployment state
+        uses: actions/cache@v4
+        with:
+          path: ~/.aspire/deployments
+          key: aspire-deploy-${{ hashFiles('**/AppHost.csproj') }}-${{ github.ref }}
+          restore-keys: |
+            aspire-deploy-${{ hashFiles('**/AppHost.csproj') }}-
+            aspire-deploy-
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            10.x
+
+      # Install Aspire CLI (dev channel) and add to PATH
+      - name: Install Aspire CLI
+        run: curl -sSL https://aspire.dev/install.sh | bash -s -- -q dev
+
+      - name: Add Aspire CLI to PATH
+        run: echo "$HOME/.aspire/bin" >> $GITHUB_PATH
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy with Aspire
+        working-directory: ./src/vite
+        run: aspire deploy --non-interactive --environment vite
+        env:
+          Azure__SubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          Azure__Location: ${{ secrets.AZURE_LOCATION }}
+          Azure__ResourceGroup: rg-test-vite
