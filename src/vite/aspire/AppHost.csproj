@@ -13,4 +13,8 @@
         <PackageReference Include="CommunityToolkit.Aspire.Hosting.JavaScript.Extensions" Version="13.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\webapi\webapi.csproj" />
+    </ItemGroup>
+
 </Project>
