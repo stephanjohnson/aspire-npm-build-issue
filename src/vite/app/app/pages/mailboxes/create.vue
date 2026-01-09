@@ -3,7 +3,7 @@ import { toast } from "vue-sonner";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "../../components/ui/switch";
 
 const { t } = useI18n({
   useScope: "local",
