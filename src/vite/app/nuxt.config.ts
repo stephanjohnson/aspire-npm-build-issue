@@ -26,13 +26,12 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "nuxt-security",
     "shadcn-nuxt",
-    "@nuxtjs/turnstile",
   ],
 
   app: {
     head: {
-      title: "Nullbox",
-      titleTemplate: "%s - Nullbox",
+      title: "Test",
+      titleTemplate: "%s - Test",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       link: [{ rel: "icon", type: "images/svg", href: "/favicon.svg" }],
@@ -65,7 +64,7 @@ export default defineNuxtConfig({
   icon: {
     customCollections: [
       {
-        prefix: "nullbox",
+        prefix: "test",
         dir: "./assets/icons/",
       },
     ],
@@ -78,7 +77,7 @@ export default defineNuxtConfig({
   security: {
     corsHandler: {
       // Your public-facing origin
-      origin: "https://app.nullbox.email",
+      origin: "https://app.test.io",
     },
   },
 
@@ -96,10 +95,5 @@ export default defineNuxtConfig({
      * @default "@/components/ui"
      */
     componentDir: "@/components/ui",
-  },
-
-  // https://nuxt.com/modules/turnstile
-  turnstile: {
-    siteKey: "<your-site-key>",
   },
 });
