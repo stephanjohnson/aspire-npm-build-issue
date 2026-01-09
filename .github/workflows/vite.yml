@@ -48,12 +48,6 @@ jobs:
       - name: Add Aspire CLI to PATH
         run: echo "$HOME/.aspire/bin" >> $GITHUB_PATH
 
-      - run: echo ${{ secrets.AZURE_CLIENT_ID }}
-
-      - run: echo ${{ secrets.AZURE_TENANT_ID }}
-
-      - run: echo ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
       - name: Azure login
         uses: azure/login@v2
         with:
