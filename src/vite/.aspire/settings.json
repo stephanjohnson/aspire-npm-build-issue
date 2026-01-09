@@ -1,3 +1,6 @@
 {
-  "appHostPath": "../aspire/AppHost.csproj"
+  "appHostPath": "../aspire/Vite.AppHost.csproj",
+  "features": {
+    "publishCommandEnabled": "true"
+  }
 }

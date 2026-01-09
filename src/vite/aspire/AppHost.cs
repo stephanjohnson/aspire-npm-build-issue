@@ -1,5 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+builder.AddAzureContainerAppEnvironment("env");
+
 var api = builder.AddProject<Projects.webapi>("webapi");
 
 var versionParameter = builder.AddParameter("VERSION", "development", secret: false);
